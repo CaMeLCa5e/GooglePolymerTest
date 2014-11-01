@@ -1,91 +1,94 @@
 <!doctype html>
+
 <html>
-
 <head>
+  <title>Test2Polymer</title>
 
-  <title>unquote</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="bower_components/platform/platform.js"></script>
+  <link rel="import" href="bower_components/google-map/google-map.html">
 
-  <script src="../components/platform/platform.js">
-  </script>
+  <link rel="import" href="bower_components/google-map/google-map-directions.html">
+  <link rel="import" href="bower_components/core-field/core-field.html">
+  <link rel="import" href="bower_components/core-icon/core-icon.html">
+  <link rel="import" href="bower_components/core-icons/core-icons.html"
+  <link rel="import" href="bower_components/core-icons/maps-icons.html">
+  <link rel="import" href="bower_components/core-item/core-item.html">
+  <link rel="import" href="bower_components/core-selector/core-selector.html">
 
-  <link rel="import" href="../components/font-roboto/roboto.html">
-  <link rel="import"
-    href="../components/core-header-panel/core-header-panel.html">
-  <link rel="import"
-    href="../components/core-toolbar/core-toolbar.html">
-  <link rel="import"
-    href="../components/paper-tabs/paper-tabs.html">
-  <link rel="import" href="post-list.html">
-
-  <style>
-  html,body {
-    height: 100%;
-    margin: 0;
-    background-color: #E5E5E5;
-    font-family: 'RobotoDraft', sans-serif;
-  }
-  core-header-panel {
-    height: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch; 
-  }
-  core-toolbar {
-    background: #03a9f4;
-    color: white;
-  }
-  #tabs {
-    width: 100%;
-    margin: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  text-transform: uppercase;
-  }
-  .container {
-    width: 80%;
-    margin: 50px auto;
-  }
-  @media (min-width: 481px) {
-    #tabs {
-      width: 200px;
-    }
-    .container {
-      width: 400px;
-    }
-  }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 
 </head>
 
-<body unresolved>
+<body>
 
-  <core-header-panel>
+<core-header-panel>
 
-    <core-toolbar>
+  <core-toolbar>
+  </core-toolbar>
 
-      <paper-tabs id="tabs" selected="all" self-end>
-        <paper-tab name="all">All</paper-tab>
-        <paper-tab name="favorites">Favorites</paper-tab>
-      </paper-tabs>
+  <Burrito>
 
-    </core-toolbar>
+</core-header-panel>
 
-    <div class="container" layout vertical center>
-      <post-list show="all"></post-list>
+  <template is="auto-binding">
+
+    <google-map fit map="{{map}}"
+                latitude="40.7127" longitude="-74.0059"></google-map>
+    <google-map-directions map="{{map}}"
+                           startAddress="{{start}}"
+                           endAddress="{{end}}"
+                           travelMode="{{travelMode.label}}">
+    </google-map-directions>
+
+    <div id="inputs">
+      <core-field>
+        <core-icon icon="icons:search"></core-icon>
+        <input placeholder="Start address" value="{{start}}">
+      </core-field>
+      <core-field>
+        <core-icon icon="icons:search"></core-icon>
+        <input placeholder="End address" value="{{end}}">
+      </core-field>
     </div>
 
-  </core-header-panel>
 
+
+      <google-map-search map="{{map}}" query="Burritos"
+                       result="{{result}}"></google-map-search>
+      <google-map map="{{map}}" latitude="40.7127"
+                longitude="-74.0059"></google-map>
+    <div>Result: {{result.latitude}}, {{result.longitude}}</div>
+  </template>
   <script>
-  var tabs = document.querySelector('paper-tabs');
-  var list = document.querySelector('post-list');
-  tabs.addEventListener('core-select', function() {
-    list.show = tabs.selected;
-  });
+    document.querySelector('google-map-search').search();
   </script>
+
+<div id="inputs">
+  <core-field>
+    <core-icon icon="icons:search"></core-icon>
+    <input placeholder="Start address" value="">
+  </core-field>
+  <core-field>
+    <core-icon icon="icons:search"></core-icon>
+    <input placeholder="End address" value="">
+  </core-field>
+  <core-selector selected="0" layout horizontal>
+    <core-item icon="maps:directions-car" label="DRIVING"></core-item>
+    <core-item icon="maps:directions-walk" label="WALKING"></core-item>
+    <core-item icon="maps:directions-bike" label="BICYCLING"></core-item>
+    <core-item icon="maps:directions-transit"label="TRANSIT"></core-item>
+    <selectedItem="{{travelMode}}">
+   </core-selector>
+</div>
+
+  </template>
+
 </body>
+
+
 
 </html>
